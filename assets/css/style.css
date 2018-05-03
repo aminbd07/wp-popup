@@ -1,0 +1,32 @@
+.wpobp {
+    text-decoration: underline;
+    font-weight: bold;
+}
+ 
+
+.modal-title{
+    font-size: 14px;
+    font-size: 1rem;
+    font-weight: 800;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+}
+
+.wpobm-modal .small {
+    max-width: 25%; 
+}
+
+.wpobm-modal .medium {
+    max-width: 40%; 
+}
+.wpobm-modal .large {
+    max-width: 55%; 
+}
+.wpobm-modal .extra-large {
+    max-width: 75%; 
+}
+.wpobm-modal .full-width {
+    max-width: 100%; 
+    
+}
+ 

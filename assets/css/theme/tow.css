@@ -1,0 +1,42 @@
+.modal-header{
+    background:#000000 ;
+    color: #fff;
+}
+
+.modal-title{
+    color: #fff;
+}
+
+.modal-content{
+    border-color: #000000;
+}
+.modal-body{
+    
+}
+
+.modal-footer{
+    
+}
+ 
+ .close {  
+    position: absolute;
+    position: relative;
+    bottom: -13px; 
+    right: 5px;
+    margin: 0px;
+    padding: 0px;
+    content: ''; 
+    background: url(../../images/close.png) no-repeat center center;    
+}
+.close:hover{
+    background: url(../../images/close-hove.png) no-repeat center center;  
+}
+ 
+.close-btn{  
+    color: #fff;
+    background-color: #000000;
+    border-color: #000000;
+}
+
+
+    

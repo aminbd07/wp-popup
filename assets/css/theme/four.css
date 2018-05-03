@@ -1,0 +1,45 @@
+.modal-header{
+    background:#f5f5f5 ;
+    color: #373737;
+    
+}
+.modal-title{
+    color: #373737;
+}
+
+.modal-content{
+    background:#f5f5f5 ;
+    border-color: #f5f5f5;
+    color: #373737
+}
+.modal-body{
+    background:#f5f5f5 ;
+    border-color: #f5f5f5;
+}
+
+.modal-footer{
+    background:#f5f5f5 ;
+    border-color: #ececec;
+}
+ 
+ .close {  
+    position: absolute;
+    position: relative;
+    bottom: -13px; 
+    right: 5px;
+    margin: 0px;
+    padding: 0px;
+    content: ''; 
+    background: url(../../images/close_gray.png) no-repeat center center;    
+}
+.close:hover{
+    background: url(../../images/close_black.png) no-repeat center center;  
+}
+.close-btn{  
+    color: #666666;
+    background-color: #cacfd4;
+    border-color: #cacfd4;
+}
+
+
+    

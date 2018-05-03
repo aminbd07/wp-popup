@@ -1,0 +1,42 @@
+.modal-header{
+    background:#337ab7 ;
+    color: #ffffff;
+}
+.modal-title{
+    color: #fff;
+}
+
+.modal-content{
+    border-color: #337ab7;
+}
+.modal-body{
+    
+}
+
+.modal-footer{
+    
+}
+.modal-footer .close {
+    background:#337ab7
+}
+ .close {  
+    position: absolute;
+    position: relative;
+    bottom: -13px; 
+    right: 5px;
+    margin: 0px;
+    padding: 0px;
+    content: ''; 
+    background: url(../../images/close.png) no-repeat center center;    
+}
+.close:hover{
+    background: url(../../images/close-hove.png) no-repeat center center;  
+}
+.close-btn{  
+    color: #fff;
+    background-color: #337ab7;
+    border-color: #337ab7;
+}
+
+
+    
