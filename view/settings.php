@@ -64,13 +64,18 @@
              <br/>
             <div class="form-group"> 
              <label> Modal Size   </label>
-                <select name="modal_size" class="form-control ">
+                <select name="modal_size"  class="form-control modal_size">
                     <option value="small" <?php if($this->global_setting['modal_size'] == 'small' ) echo 'selected' ?> >Small</option>
                     <option value="medium" <?php if($this->global_setting['modal_size'] == 'medium' ) echo 'selected' ?> >Medium</option>
                     <option value="large" <?php if($this->global_setting['modal_size'] == 'large' ) echo 'selected' ?> >Large</option>
                     <option value="extra-large"<?php if($this->global_setting['modal_size'] == 'extra-large' ) echo 'selected' ?> >Extra Large</option>
                     <option value="full-width"<?php if($this->global_setting['modal_size'] == 'full-width' ) echo 'selected' ?> >Full Width (100%) </option>
+                    <option value="custom_size"<?php if($this->global_setting['modal_size'] == 'custom_size' ) echo 'selected' ?> > Custom Size </option>
                 </select>
+             
+             <div class="modal_custom_width_area" style="display: <?php echo $this->global_setting['modal_size'] == 'custom_size' ? 'block':  'none' ?> ">
+                 <input type="text" name="modal_custom_width" class="modal_custom_width" value="<?php echo $this->global_setting['modal_custom_width'] ?>" />
+             </div>
             </div>
  
             <br/>

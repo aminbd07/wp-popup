@@ -1,5 +1,11 @@
 
+body{
+    background: #f1f1f1 !important;
+}
 
+.toplevel_page_wpob-popup #adminmenu{
+    background:  #22282e;
+}
 .wpobm .how-to-group{
     background: #fff;
     padding: 10px;
@@ -15,9 +21,31 @@
 .wpobm  .form-area{
     max-width: 350px;
 }
+.post-type-wpob-popup .popup_type_settings .form-group{
+    margin-bottom: 10px;
+}
+.post-type-wpob-popup .popup_type_settings label {
+    width : 25% ; 
+    display: inline-block;
+    font-weight: bold;
+}
+.post-type-wpob-popup .popup_type_settings label.no-fixed {
+    width : fit-content  ;
+    display: inline-block;
+
+}
+.post-type-wpob-popup .popup_type_settings input[type="text"]  {
+     width: 40%; 
+}
+.post-type-wpob-popup .popup_type_settings input[class="small"]  {
+     width: 10%; 
+}
+
+
 .wpobm  .form-group {
     margin-bottom: 1rem;
 }
+ 
 .wpobm  label {
     display: inline-block;
     margin-bottom: .5rem;
@@ -212,16 +240,77 @@ input:checked + .slider:before {
 }
 
 .switch-field input:checked + label {
-    background-color: #2196F3;
+    background-color: #0070ad;
     color: #fff;
     -webkit-box-shadow: none;
     box-shadow: none;
 }
 
 .switch-field label:first-of-type {
-    border-radius: 4px 0 0 4px;
+    border-radius: 15px 0 0 15px;
 }
 
 .switch-field label:last-of-type {
-    border-radius: 0 4px 4px 0;
+    border-radius: 0 15px 15px 0;
+}
+
+/* Popup form design*/
+.loading_content{
+    text-align: center;
+}
+.loading_content img{
+    max-width: 100px;
+}
+.selected_info{
+    display: none; 
+}
+.select_popup_type{
+    padding: 0px;
+    margin: 0px;
+    list-style: none
+}
+.select_popup_type li {
+    float: left; 
+    margin: 10px;
+    width: 70px;
+    height: 50px;
+    text-align: center
+}
+.select_popup_type li img {
+    width: 40px;
+    cursor:pointer;
+  border:2px solid transparent;
+  padding: 8px;
+}
+
+.select_popup_type li label span {
+     position: absolute; 
+     margin-left: 40px;
+}
+
+.select_popup_type li label > input{ /* HIDE RADIO */
+  visibility: hidden; /* Makes input not-clickable */
+  position: absolute; /* Remove input from document flow */
+}
+ 
+.select_popup_type li label > input:checked + img{ /* (RADIO CHECKED) IMAGE STYLES */
+  border:2px solid #0070ad;
+} 
+
+.select_popup_type li label p{
+    display: none;
+}
+.popup-settings-side-bar label{
+      
+    display: block; 
+}
+
+.popup-settings-side-bar .title{
+    font-weight: bold;
+    
+}
+
+.popup-settings-side-bar .form-group{
+    margin-bottom: 20px;
+    
 }

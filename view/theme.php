@@ -3,14 +3,16 @@
     <div class="row"> 
         <div class="col-md-5"> 
             <form method="post" id='wpobm-theme'>
-
+                <?php 
+                 $act_theme = get_option('wpobm_active_theme'); 
+                ?>
                 <div class="form-group">
                     <label> Select a Theme   </label>
                     <select name="wpobm_active_theme" class="form-control theme-change ">
-                        <option value="one"  >Theme 1</option>
-                        <option value="tow"  >Theme 2</option>
-                        <option value="three">Theme 3</option>
-                        <option value="four">Theme 4</option>
+                        <option value="one" <?php echo $act_theme == 'one'? 'selected' : '' ?> >Theme 1</option>
+                        <option value="tow" <?php echo $act_theme == 'tow'? 'selected' : '' ?>  >Theme 2</option>
+                        <option value="three" <?php echo $act_theme == 'three'? 'selected' : '' ?>>Theme 3</option>
+                        <option value="four" <?php echo $act_theme == 'four'? 'selected' : '' ?>>Theme 4</option>
                     </select>
                 </div>
                 <div>
