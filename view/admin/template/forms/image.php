@@ -1,13 +1,13 @@
 
 
 <label for="upload_image">
-    <input id="upload_image" type="text" size="36" name="modal_image" value="<?php echo $modal_data; ?>" /> 
+    <input id="upload_image" type="text" size="36" name="popup_image" value="<?php echo $popup_data; ?>" /> 
     <input id="upload_image_button" class="button" type="button" value="Image from Gallery" />
     <br />Enter a URL or upload an image <br/>
     <?php
-    if ($modal_data != "") {
+    if ($popup_data != "") {
        echo "Current Image <br/>";
-       echo "<img src='".$modal_data ."' width='150' />"; 
+       echo "<img src='".$popup_data ."' width='150' />"; 
     }
     ?>
 </label>

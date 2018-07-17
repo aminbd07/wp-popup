@@ -1,19 +1,19 @@
 
 <div class="<?php echo $this->text_domain ?> settings"> 
     <h1>Global Settings </h1>
-    <form method="post" id='wpobm-settings-form'>
+    <form method="post" id='wpsp-settings-form'>
         <div class=" form-area"> 
 
             <div class="form-group">
-                <label> Modal Overlay color  </label>
-                <input type="text" data-default-color="" class="color-field form-control " name="modal_bg_color" value="<?php echo $this->global_setting['modal_bg_color'] ?>" />
+                <label> popup Overlay color  </label>
+                <input type="text" data-default-color="" class="color-field form-control " name="popup_bg_color" value="<?php echo $this->global_setting['popup_bg_color'] ?>" />
             </div>
             <div class="form-group">
-                <label> Modal Overlay Opacity  </label>
+                <label> popup Overlay Opacity  </label>
                 <div class="range-slider">
-                    <input class="input-range" type="range" value="<?php echo $this->global_setting['modal_bg_opacity'] ?>" min="0" max="100">
+                    <input class="input-range" type="range" value="<?php echo $this->global_setting['popup_bg_opacity'] ?>" min="0" max="100">
                     <div class="rnage-input"> 
-                        <input type="text" value="<?php echo $this->global_setting['modal_bg_opacity'] ?>"  class="range-value-udate" name="modal_bg_opacity"  />
+                        <input type="text" value="<?php echo $this->global_setting['popup_bg_opacity'] ?>"  class="range-value-udate" name="popup_bg_opacity"  />
                         % </div>
                 </div>
 
@@ -42,7 +42,7 @@
                 <label> Dialog box top margin (px or %)  </label>
                 <input type="text" name="top_margin" class="form-control " value="<?php echo $this->global_setting['top_margin'] ?>" />
                 
-                  <label> Show Modal Footer </label>
+                  <label> Show popup Footer </label>
                    
                   <?php
                     $chsf_y = '';
@@ -63,18 +63,18 @@
              <br/>
              <br/>
             <div class="form-group"> 
-             <label> Modal Size   </label>
-                <select name="modal_size"  class="form-control modal_size">
-                    <option value="small" <?php if($this->global_setting['modal_size'] == 'small' ) echo 'selected' ?> >Small</option>
-                    <option value="medium" <?php if($this->global_setting['modal_size'] == 'medium' ) echo 'selected' ?> >Medium</option>
-                    <option value="large" <?php if($this->global_setting['modal_size'] == 'large' ) echo 'selected' ?> >Large</option>
-                    <option value="extra-large"<?php if($this->global_setting['modal_size'] == 'extra-large' ) echo 'selected' ?> >Extra Large</option>
-                    <option value="full-width"<?php if($this->global_setting['modal_size'] == 'full-width' ) echo 'selected' ?> >Full Width (100%) </option>
-                    <option value="custom_size"<?php if($this->global_setting['modal_size'] == 'custom_size' ) echo 'selected' ?> > Custom Size </option>
+             <label> popup Size   </label>
+                <select name="popup_size"  class="form-control popup_size">
+                    <option value="small" <?php if($this->global_setting['popup_size'] == 'small' ) echo 'selected' ?> >Small</option>
+                    <option value="medium" <?php if($this->global_setting['popup_size'] == 'medium' ) echo 'selected' ?> >Medium</option>
+                    <option value="large" <?php if($this->global_setting['popup_size'] == 'large' ) echo 'selected' ?> >Large</option>
+                    <option value="extra-large"<?php if($this->global_setting['popup_size'] == 'extra-large' ) echo 'selected' ?> >Extra Large</option>
+                    <option value="full-width"<?php if($this->global_setting['popup_size'] == 'full-width' ) echo 'selected' ?> >Full Width (100%) </option>
+                    <option value="custom_size"<?php if($this->global_setting['popup_size'] == 'custom_size' ) echo 'selected' ?> > Custom Size </option>
                 </select>
              
-             <div class="modal_custom_width_area" style="display: <?php echo $this->global_setting['modal_size'] == 'custom_size' ? 'block':  'none' ?> ">
-                 <input type="text" name="modal_custom_width" class="modal_custom_width" value="<?php echo $this->global_setting['modal_custom_width'] ?>" />
+             <div class="popup_custom_width_area" style="display: <?php echo $this->global_setting['popup_size'] == 'custom_size' ? 'block':  'none' ?> ">
+                 <input type="text" name="popup_custom_width" class="popup_custom_width" value="<?php echo $this->global_setting['popup_custom_width'] ?>" />
              </div>
             </div>
  

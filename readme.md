@@ -12,24 +12,24 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 
 == Description ==
-Easily add Bootstrap Modal in your site. You can create  custom post and use as popover anywhere in your site with short code. 
+Easily add Bootstrap popup in your site. You can create  custom post and use as popover anywhere in your site with short code. 
 Also you can use for registration, login or any form. 
-For short code use: [wpob-modal id="<your-postID-here->"] 
-You can use pre build theme for modal or you can customize design from settings page. 
+For short code use: [wpob-popup id="<your-postID-here->"] 
+You can use pre build theme for popup or you can customize design from settings page. 
 Icon Credit :  https://www.flaticon.com
 
 
 
 = Features =
-  * Use Custom post as modal.
+  * Use Custom post as popup.
   * Use anywhere in your site. 
-  * Trigger modal on load website or specific page or post (coming soon) .
+  * Trigger popup on load website or specific page or post (coming soon) .
   * 4 Predefine themes (more coming soon). 
   * Customize design as your need. 
    
 
 == Installation ==
-1. Download and install the plugin from WordPress dashboard. You can also upload the entire “wpob modal” folder to the `/wp-content/plugins/` directory
+1. Download and install the plugin from WordPress dashboard. You can also upload the entire “wpob popup” folder to the `/wp-content/plugins/` directory
 2. Activate the plugin through the ‘Plugins’ menu in WordPress
 
 == Changelog ==

@@ -1,4 +1,4 @@
-.wpobp {
+.wpsp {
     text-decoration: underline;
     font-weight: bold;
 }
@@ -12,20 +12,20 @@
     text-transform: uppercase;
 }
 
-.wpobm-modal .small {
+.wpsp-popup .small {
     max-width: 25%; 
 }
 
-.wpobm-modal .medium {
+.wpsp-popup .medium {
     max-width: 40%; 
 }
-.wpobm-modal .large {
+.wpsp-popup .large {
     max-width: 55%; 
 }
-.wpobm-modal .extra-large {
+.wpsp-popup .extra-large {
     max-width: 75%; 
 }
-.wpobm-modal .full-width {
+.wpsp-popup .full-width {
     max-width: 100%; 
     
 }

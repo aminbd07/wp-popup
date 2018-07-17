@@ -1,14 +1,14 @@
 <div class="<?php echo $this->text_domain ?> how-to-use"> 
-    <h1>Modal Theme</h1>
+    <h1>popup Theme</h1>
     <div class="row"> 
         <div class="col-md-5"> 
-            <form method="post" id='wpobm-theme'>
+            <form method="post" id='wpsp-theme'>
                 <?php 
-                 $act_theme = get_option('wpobm_active_theme'); 
+                 $act_theme = get_option('wpsp_active_theme'); 
                 ?>
                 <div class="form-group">
                     <label> Select a Theme   </label>
-                    <select name="wpobm_active_theme" class="form-control theme-change ">
+                    <select name="wpsp_active_theme" class="form-control theme-change ">
                         <option value="one" <?php echo $act_theme == 'one'? 'selected' : '' ?> >Theme 1</option>
                         <option value="tow" <?php echo $act_theme == 'tow'? 'selected' : '' ?>  >Theme 2</option>
                         <option value="three" <?php echo $act_theme == 'three'? 'selected' : '' ?>>Theme 3</option>
@@ -41,14 +41,14 @@
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <div class="modal-title">Modal title</div>
+                                <div class="modal-title">popup title</div>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true"></span>
                                 </button>
                             </div>
                             
                             <div class="modal-body">
-                                <p>Modal body text goes here.</p>
+                                <p>popup body text goes here.</p>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn close-btn" data-dismiss="modal">Close</button>

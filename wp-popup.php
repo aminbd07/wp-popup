@@ -1,28 +1,28 @@
 <?php
 /*
- * Plugin Name: WP Modal
+ * Plugin Name: Smart Popup
  * Version: 1.0.0
  * Plugin URI:
- * Description: Add Modal anywhere in yoursite with short code.  
+ * Description: Add popup anywhere in yoursite with short code.  
  * Author: Nurul Amin 
  * Author URI: http://nurul.ninja
  * Requires at least: 4.0
  * Tested up to: 4.9.1
  * License: GPL2
- * Text Domain: wpobm  
+ * Text Domain: wpsp
  * Domain Path: /lang/
  *
  */
 
-class WPOBModal {
+class WPSPopup {
 
     public $version = '1.0.0';
-    public $text_domain = 'wpobm';
+    public $text_domain = 'wpsp';
     public $db_version = '1.0.0';
-    public $custom_post_name = 'wpob-popup';
-    public $setting_options_name = 'wpobm_global_settings';
+    public $custom_post_name = 'wps-popup';
+    public $setting_options_name = 'wpsp_global_settings';
     public $global_setting = null;
-    public $load_modals = [];
+    public $load_popups = [];
     public $custom_fields = [];
     protected static $_instance = null;
 
@@ -65,12 +65,12 @@ class WPOBModal {
         add_action('admin_menu', array($this, 'admin_menu'));
 
         add_action('init', array($this, 'register_post_type'));
-        add_shortcode('wpob-popup', array($this, 'render_short_code'));
+        add_shortcode('wps-popup', array($this, 'render_short_code'));
         add_filter("manage_{$this->custom_post_name}_posts_columns", array($this, 'manage_custom_columns'));
         add_action("manage_{$this->custom_post_name}_posts_custom_column", array($this, 'manage_custom_columns_value'));
-        add_action('wp_ajax_wpobm_settings_save', array($this, 'settings_save'));
-        add_action('wp_ajax_wpobp_update_theme_save', array($this, 'update_theme_save'));
-        add_action('wp_ajax_wpobp_show_custom_popup_input', array($this, 'show_custom_popup_input'));
+        add_action('wp_ajax_wpsp_settings_save', array($this, 'settings_save'));
+        add_action('wp_ajax_wpsp_update_theme_save', array($this, 'update_theme_save'));
+        add_action('wp_ajax_wpsp_show_custom_popup_input', array($this, 'show_custom_popup_input'));
 
         // popup from customizw
         add_action('edit_form_after_title', array($this, 'popup_type_select'));
@@ -82,10 +82,11 @@ class WPOBModal {
     }
 
     public function define_constants() {
-        $this->define('WPOBM_VERSION', $this->version);
-        $this->define('WPOBM_DB_VERSION', $this->db_version);
-        $this->define('WPOBM_PATH', plugin_dir_path(__FILE__));
-        $this->define('WPOBM_URL', plugins_url('', __FILE__));
+        $this->define('WPSP_VERSION', $this->version);
+        $this->define('WPSP_DB_VERSION', $this->db_version);
+        $this->define('WPSP_PATH', plugin_dir_path(__FILE__));
+        $this->define('WPSP_URL', plugins_url('', __FILE__));
+        $this->define('PRO_URL', 'http://wpobserver.com/wp-popup');
     }
 
     public function define($name, $value) {
@@ -101,16 +102,16 @@ class WPOBModal {
     public function activate() {
         flush_rewrite_rules();
         $init_data = array(
-            'modal_bg_color' => '#000000',
-            'modal_bg_opacity' => '100',
+            'popup_bg_color' => '#000000',
+            'popup_bg_opacity' => '100',
             'show_close_btn' => 'yes',
             'top_margin' => '10%',
             'show_footer' => 'yes',
-            'modal_size' => 'small'
+            'popup_size' => 'small'
         );
         $init_data = serialize($init_data);
         update_option($this->setting_options_name, $init_data);
-        update_option('wpobm_active_theme', 'one');
+        update_option('wpsp_active_theme', 'one');
     }
 
     public function deactivate() {
@@ -158,30 +159,30 @@ class WPOBModal {
 
         wp_enqueue_script('jquery');
         wp_enqueue_style('bootstrap', 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css');
-        wp_enqueue_script('wpob_modal_front', plugins_url('assets/js/script.js', __FILE__), '', false, true);
-        wp_enqueue_style('wpob_modal_front', plugins_url('/assets/css/style.css', __FILE__));
+        wp_enqueue_script('wps_popup_front', plugins_url('assets/js/script.js', __FILE__), '', false, true);
+        wp_enqueue_style('wps_popup_front', plugins_url('/assets/css/style.css', __FILE__));
 
-        $act_theme = get_option('wpobm_active_theme');
-        wp_enqueue_style('wpob_modal_front_theme', plugins_url('/assets/css/theme/' . $act_theme . '.css', __FILE__));
+        $act_theme = get_option('wpsp_active_theme');
+        wp_enqueue_style('wps_popup_front_theme', plugins_url('/assets/css/theme/' . $act_theme . '.css', __FILE__));
     }
 
     function admin_enqueue() {
 
         wp_enqueue_style('wp-color-picker');
-        wp_enqueue_style('wpob_modal_backend', plugins_url('/assets/css/admin_style.css', __FILE__));
-        wp_enqueue_script('wpob_modal_backend', plugins_url('/assets/js/admin-script.js', __FILE__), array('wp-color-picker', 'jquery'), false, false);
+        wp_enqueue_style('wps_popup_backend', plugins_url('/assets/css/admin_style.css', __FILE__));
+        wp_enqueue_script('wps_popup_backend', plugins_url('/assets/js/admin-script.js', __FILE__), array('wp-color-picker', 'jquery'), false, false);
         if (isset($_GET['page']) && $_GET['page'] == 'theme') {
             wp_enqueue_style('bootstrap', 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css');
             //Load Theme
-            $act_theme = get_option('wpobm_active_theme');
-            wp_enqueue_style('wpob_modal_backend_style', plugins_url('/assets/css/theme/' . $act_theme . '.css', __FILE__));
+            $act_theme = get_option('wpsp_active_theme');
+            wp_enqueue_style('wps_popup_backend_style', plugins_url('/assets/css/theme/' . $act_theme . '.css', __FILE__));
         }
 
-        wp_localize_script('wpob_modal_backend', 'WPOBM_Vars', array(
+        wp_localize_script('wps_popup_backend', 'WPSP_Vars', array(
             'ajaxurl' => admin_url('admin-ajax.php'),
-            'pluginpath' => WPOBM_PATH,
-            'pluginurl' => WPOBM_URL,
-            'nonce' => wp_create_nonce('wpobm_nonce'),
+            'pluginpath' => WPSP_PATH,
+            'pluginurl' => WPSP_URL,
+            'nonce' => wp_create_nonce('wpsp_nonce'),
         ));
     }
 
@@ -191,7 +192,7 @@ class WPOBModal {
 
         add_submenu_page('edit.php?post_type=' . $this->custom_post_name, __('Theme', $this->text_domain), __('Theme', $this->text_domain), $capability, __('theme', $this->text_domain), array($this, 'manage_menu_pages'));
         add_submenu_page('edit.php?post_type=' . $this->custom_post_name, __('How To USE', $this->text_domain), __('How to Use', $this->text_domain), $capability, __('how_to_use', $this->text_domain), array($this, 'manage_menu_pages'));
-        add_submenu_page('edit.php?post_type=' . $this->custom_post_name, __('WPOBM Settings', $this->text_domain), __('Setting', $this->text_domain), $capability, __('global_settings', $this->text_domain), array($this, 'manage_menu_pages'));
+        add_submenu_page('edit.php?post_type=' . $this->custom_post_name, __('WPSP Settings', $this->text_domain), __('Setting', $this->text_domain), $capability, __('global_settings', $this->text_domain), array($this, 'manage_menu_pages'));
     }
 
     function manage_menu_pages() {
@@ -216,13 +217,13 @@ class WPOBModal {
 
             default:
         }
-        require ( WPOBM_PATH . '/view/' . $view_page );
+        require ( WPSP_PATH . '/view/' . $view_page );
     }
 
     function manage_custom_columns($columns) {
 
-        $new_columns['wpobm_sc'] = "Short Code";
-        $new_columns['wpobm_type'] = "Popup Type";
+        $new_columns['wpsp_sc'] = "Short Code";
+        $new_columns['wpsp_type'] = "Popup Type";
         $filtered_columns = array_merge($columns, $new_columns);
 
 
@@ -231,12 +232,16 @@ class WPOBModal {
 
     function manage_custom_columns_value($column) {
         global $post;
+
+        $metadata = get_post_meta($post->ID, $this->text_domain . '_popup_settings', TRUE);
+        $metadata = unserialize($metadata);
+
         switch ($column) {
-            case 'wpobm_sc' :
-                echo "[wpob-popup id='{$post->ID}']";
+            case 'wpsp_sc' :
+                echo "[wps-popup id='{$post->ID}']";
                 break;
-            case 'wpobm_type' :
-                echo "Post Type";
+            case 'wpsp_type' :
+                echo $metadata['popup_type'];
                 break;
 
             default :
@@ -249,7 +254,7 @@ class WPOBModal {
      */
     function settings_save() {
         $post = $_POST;
-        //check_ajax_referer('wpobm_nonce', $post['nonce']);
+        //check_ajax_referer('wpsp_nonce', $post['nonce']);
         parse_str($post['form_data'], $form_data);
 
         $form_data = serialize($form_data);
@@ -266,12 +271,12 @@ class WPOBModal {
      */
     function update_theme_save() {
         $post = $_POST;
-        //check_ajax_referer('wpobm_nonce', $post['nonce']);
+        //check_ajax_referer('wpsp_nonce', $post['nonce']);
         parse_str($post['form_data'], $form_data);
 
         //$form_data = serialize($form_data);
 
-        update_option('wpobm_active_theme', $form_data['wpobm_active_theme']);
+        update_option('wpsp_active_theme', $form_data['wpsp_active_theme']);
 
         echo "Theme Update  Success!!";
 
@@ -305,10 +310,10 @@ class WPOBModal {
             $class = $metadata['show_as'] == 'button' ? 'btn btn-primary' : '';
             $style = "style=' background-color:{$metadata['button_color']};  border-radius:{$metadata['button_border_radious']}px; border-color:{$metadata['button_color']}'";
             $style = $metadata['show_as'] == 'button' ? $style : '';
-            echo $data = "<a href='' {$style}  class=' {$class}' data-toggle='modal' data-target='#wpobm-{$id}'>{$title}</a>";
+            echo $data = "<a href='' {$style}  class=' {$class}' data-toggle='modal' data-target='#wpsp-{$id}'>{$title}</a>";
         }
 
-        //include WPOBM_PATH . '/view/frontend/modal.php';
+        //include WPSP_PATH . '/view/frontend/popup.php';
 
         $output = ob_get_clean();
 
@@ -317,7 +322,7 @@ class WPOBModal {
 
     function add_data_in_post_content($content) {
 
-        $pattern = get_shortcode_regex(array('wpob-popup'));
+        $pattern = get_shortcode_regex(array('wps-popup'));
         preg_match_all('/' . $pattern . '/s', $content, $matches);
 
         $scs = $matches[0];
@@ -335,12 +340,12 @@ class WPOBModal {
             $id = str_replace('"', '', $id);
             $id = str_replace("'", '', $id);
             $id = intval($id);
-            $html .= $this->get_modal_data($id);
+            $html .= $this->get_popup_data($id);
         }
         return $content . $html;
     }
 
-    function get_modal_data($id) {
+    function get_popup_data($id) {
         $post = get_post($id);
 
         $metadata = get_post_meta($post->ID, $this->text_domain . '_popup_settings', TRUE);
@@ -349,7 +354,7 @@ class WPOBModal {
         ob_start();
         $popup_type = $metadata['popup_type'];
 
-        include WPOBM_PATH . '/view/frontend/modal.php';
+        include WPSP_PATH . '/view/frontend/popup.php';
 
         $output = ob_get_clean();
 
@@ -367,28 +372,28 @@ class WPOBModal {
         $metadata = unserialize($metadata);
 
 
-        include WPOBM_PATH . '/view/admin/template/popup_type_select.php';
+        include WPSP_PATH . '/view/admin/template/popup_type_select.php';
     }
 
-    function checkContent($content, $type){
-        switch ($type){
+    function checkContent($content, $type) {
+        switch ($type) {
 
             case "image" :
-                  $content = file_exists($content) ? $content : "Image not found" ;
+                $content = file_exists($content) ? $content : "Image not found";
                 break;
 
             case "facebook" :
             case "html":
-             $content = strip_shortcodes($content);
-             $content = $this->conetnt_filter($content);
+                $content = strip_shortcodes($content);
+                $content = $this->conetnt_filter($content);
 
                 break;
 
             case "shortcode" :
-                $content = $content ;
+                $content = $content;
                 break;
             case "youtube" :
-                $content = $content; 
+                $content = $content;
                 break;
 
             default:
@@ -398,45 +403,54 @@ class WPOBModal {
     }
 
     function conetnt_filter($content) {
+        if ($this->is_pro()) {
+            return $content;
+        }
         // match any iframes
         $pattern = '~<iframe.*</iframe>|<embed.*</embed>|<object.*</object>~';
         preg_match_all($pattern, $content, $matches);
-        if(!empty($matches)) $content = "Iframe and any video tags are not allowed! use specific type for content";
+        foreach ($matches as $key => $value) {
+            if (empty($value)) {
+                unset($matches[$key]);
+            }
+        }
+
+        if (!empty($matches))
+            $content = "Iframe and any video tags are not allowed! use specific type for content";
 
         return $content;
     }
-
 
     function show_custom_popup_input() {
 
         global $wp;
         $type = $_POST['popuptype'];
         $post = get_post($_POST['post_ID']);
-            
+
         $page = '';
         $metadata = get_post_meta($post->ID, $this->text_domain . '_popup_settings', TRUE);
         $metadata = unserialize($metadata);
-        // $modal_data = $post->post_excerpt;
+        // $popup_data = $post->post_excerpt;
 
         switch ($type) {
 
             case "image" :
-                $modal_data = $metadata['modal_image'];
+                $popup_data = $metadata['popup_image'];
                 $page = 'image.php';
                 break;
 
             case "facebook" :
-                $modal_data = $metadata['modal_fb'];
+                $popup_data = $metadata['popup_fb'];
                 $page = 'facebook.php';
-            
+
                 break;
 
             case "shortcode" :
-                $modal_data = $metadata['modal_sc'];
+                $popup_data = $metadata['popup_sc'];
                 $page = 'shortcode.php';
                 break;
             case "youtube" :
-                $modal_data = $metadata['modal_yt'];
+                $popup_data = $metadata['popup_yt'];
                 $page = 'youtube.php';
                 break;
 
@@ -446,20 +460,29 @@ class WPOBModal {
 
 
 
-        include WPOBM_PATH . 'view/admin/template/forms/' . $page;
+        include WPSP_PATH . 'view/admin/template/forms/' . $page;
 
         die();
     }
 
     function add_fields_meta_box($post) {
-        add_meta_box($this->custom_post_name . '_meta_box', __('Popup Settings', $this->text_domain), array($this, 'wp_popup_custom_post_settings'), 'wpob-popup', 'side', 'low');
+        add_meta_box($this->custom_post_name . '_meta_box', __('Popup Settings', $this->text_domain), array($this, 'wp_popup_custom_post_settings'), 'wps-popup', 'side', 'low');
+        // add_meta_box($this->custom_post_name . '_meta_box2', __('Popup Advance Settings', $this->text_domain), array($this, 'wp_popup_custom_post_advance_settings'), 'wps-popup', 'normal', 'low');
     }
 
     function wp_popup_custom_post_settings() {
         global $post;
         $metadata = get_post_meta($post->ID, $this->text_domain . '_popup_settings', TRUE);
         $metadata = unserialize($metadata);
-        include WPOBM_PATH . 'view/admin/template/forms/popup-settings.php';
+        include WPSP_PATH . 'view/admin/template/forms/popup-settings.php';
+    }
+
+    function wp_popup_custom_post_advance_settings() {
+        global $post;
+        $metadata = get_post_meta($post->ID, $this->text_domain . '_popup_settings', TRUE);
+        $metadata = unserialize($metadata);
+
+        include WPSP_PATH . 'pro/view/popup-advance-settings.php';
     }
 
     function save_post_meta_data() {
@@ -474,10 +497,10 @@ class WPOBModal {
                 $button_color = (isset($post['button_color']) ) ? sanitize_text_field($post['button_color']) : '#cccccc';
                 $button_border_radious = (isset($post['button_border_radious']) ) ? sanitize_text_field($post['button_border_radious']) : '0';
                 $load_after = (isset($post['load_after']) ) ? sanitize_text_field($post['load_after']) : '0';
-                $modal_image = (isset($post['modal_image']) ) ? sanitize_text_field($post['modal_image']) : '';
-                $modal_fb = (isset($post['modal_fb']) ) ? sanitize_text_field($post['modal_fb']) : '';
-                $modal_yt = (isset($post['modal_yt']) ) ? sanitize_text_field($post['modal_yt']) : '';
-                $modal_sc = (isset($post['modal_sc']) ) ? sanitize_text_field($post['modal_sc']) : '';
+                $popup_image = (isset($post['popup_image']) ) ? sanitize_text_field($post['popup_image']) : '';
+                $popup_fb = (isset($post['popup_fb']) ) ? sanitize_text_field($post['popup_fb']) : '';
+                $popup_yt = (isset($post['popup_yt']) ) ? sanitize_text_field($post['popup_yt']) : '';
+                $popup_sc = (isset($post['popup_sc']) ) ? sanitize_text_field($post['popup_sc']) : '';
 
                 $data = array(
                     'popup_type' => $popup_type,
@@ -486,61 +509,58 @@ class WPOBModal {
                     'button_color' => $button_color,
                     'button_border_radious' => $button_border_radious,
                     'load_after' => $load_after,
-                    'modal_image' => $modal_image,
-                    'modal_fb' => $modal_fb,
-                    'modal_yt' => $modal_yt,
-                    'modal_sc' => stripslashes($modal_sc),
+                    'popup_image' => $popup_image,
+                    'popup_fb' => $popup_fb,
+                    'popup_yt' => $popup_yt,
+                    'popup_sc' => stripslashes($popup_sc),
                 );
                 update_post_meta($post_ID, $this->text_domain . '_popup_settings', serialize($data));
 
                 if ($popup_type == 'facebook') {
-                    $modal_fb_url = isset($post['modal_fb_url']) ? sanitize_text_field($post['modal_fb_url']) : 'https://www.facebook.com/bitbytetech/';
-                    $modal_fb_width = isset($post['modal_fb_width']) ? sanitize_text_field($post['modal_fb_width']) : '200';
-                    $modal_fb_height = isset($post['modal_fb_height']) ? sanitize_text_field($post['modal_fb_height']) : '500';
-                    $modal_fb_tab = isset($post['modal_fb_tab']) ? serialize($post['modal_fb_tab']) : [];
-                    $modal_fb_hide_cover = isset($post['modal_fb_hide_cover']) ? sanitize_text_field($post['modal_fb_hide_cover']) : '0';
-                    $modal_fb_small_header = isset($post['modal_fb_small_header']) ? sanitize_text_field($post['modal_fb_small_header']) : '0';
-                    $modal_fb_show_face = isset($post['modal_fb_show_face']) ? sanitize_text_field($post['modal_fb_show_face']) : '1';
-                    $modal_fb_hide_cta = isset($post['modal_fb_hide_cta']) ? sanitize_text_field($post['modal_fb_hide_cta']) : '0';
+                    $popup_fb_url = isset($post['popup_fb_url']) ? sanitize_text_field($post['popup_fb_url']) : 'https://www.facebook.com/bitbytetech/';
+                    $popup_fb_width = isset($post['popup_fb_width']) ? sanitize_text_field($post['popup_fb_width']) : '200';
+                    $popup_fb_height = isset($post['popup_fb_height']) ? sanitize_text_field($post['popup_fb_height']) : '500';
+                    $popup_fb_tab = isset($post['popup_fb_tab']) ? serialize($post['popup_fb_tab']) : [];
+                    $popup_fb_hide_cover = isset($post['popup_fb_hide_cover']) ? sanitize_text_field($post['popup_fb_hide_cover']) : '0';
+                    $popup_fb_small_header = isset($post['popup_fb_small_header']) ? sanitize_text_field($post['popup_fb_small_header']) : '0';
+                    $popup_fb_show_face = isset($post['popup_fb_show_face']) ? sanitize_text_field($post['popup_fb_show_face']) : '1';
+                    $popup_fb_hide_cta = isset($post['popup_fb_hide_cta']) ? sanitize_text_field($post['popup_fb_hide_cta']) : '0';
 
                     $fb_data = array(
-                        'modal_fb_url' => $modal_fb_url,
-                        'modal_fb_width' => $modal_fb_width,
-                        'modal_fb_height' => $modal_fb_height,
-                        'modal_fb_tab' => $modal_fb_tab,
-                        'modal_fb_hide_cover' => $modal_fb_hide_cover,
-                        'modal_fb_small_header' => $modal_fb_small_header,
-                        'modal_fb_show_face' => $modal_fb_show_face,
-                        'modal_fb_hide_cta' => $modal_fb_hide_cta
+                        'popup_fb_url' => $popup_fb_url,
+                        'popup_fb_width' => $popup_fb_width,
+                        'popup_fb_height' => $popup_fb_height,
+                        'popup_fb_tab' => $popup_fb_tab,
+                        'popup_fb_hide_cover' => $popup_fb_hide_cover,
+                        'popup_fb_small_header' => $popup_fb_small_header,
+                        'popup_fb_show_face' => $popup_fb_show_face,
+                        'popup_fb_hide_cta' => $popup_fb_hide_cta
                     );
                     update_post_meta($post_ID, $this->text_domain . '_fb_settings', serialize($fb_data));
                 }
                 if ($popup_type == 'youtube') {
-                    $modal_yt_vid = isset($post['modal_yt_vid']) ? sanitize_text_field($post['modal_yt_vid']) : '';
-                    $modal_yt_width = isset($post['modal_yt_width']) ? sanitize_text_field($post['modal_yt_width']) : '500';
-                    $modal_yt_wpp = isset($post['modal_yt_wpp']) ? sanitize_text_field($post['modal_yt_wpp']) : 'px';
-                    $modal_yt_height = isset($post['modal_yt_height']) ? sanitize_text_field($post['modal_yt_height']) : '450';
-                    $modal_yt_allowfs = isset($post['modal_yt_allowfs']) ? sanitize_text_field($post['modal_yt_allowfs']) : 1;
-                    $modal_yt_autoplay = isset($post['modal_yt_autoplay']) ? sanitize_text_field($post['modal_yt_autoplay']) : '0';
-                    $modal_yt_videoloop = isset($post['modal_yt_videoloop']) ? sanitize_text_field($post['modal_yt_videoloop']) : '0';
-                    $modal_yt_videocontorl = isset($post['modal_yt_videocontorl']) ? sanitize_text_field($post['modal_yt_videocontorl']) : '1';
+                    $popup_yt_vid = isset($post['popup_yt_vid']) ? sanitize_text_field($post['popup_yt_vid']) : '';
+                    $popup_yt_width = isset($post['popup_yt_width']) ? sanitize_text_field($post['popup_yt_width']) : '500';
+                    $popup_yt_wpp = isset($post['popup_yt_wpp']) ? sanitize_text_field($post['popup_yt_wpp']) : 'px';
+                    $popup_yt_height = isset($post['popup_yt_height']) ? sanitize_text_field($post['popup_yt_height']) : '450';
+                    $popup_yt_allowfs = isset($post['popup_yt_allowfs']) ? sanitize_text_field($post['popup_yt_allowfs']) : 1;
+                    $popup_yt_autoplay = isset($post['popup_yt_autoplay']) ? sanitize_text_field($post['popup_yt_autoplay']) : '0';
+                    $popup_yt_videoloop = isset($post['popup_yt_videoloop']) ? sanitize_text_field($post['popup_yt_videoloop']) : '0';
+                    $popup_yt_videocontorl = isset($post['popup_yt_videocontorl']) ? sanitize_text_field($post['popup_yt_videocontorl']) : '1';
 
 
                     $yt_data = array(
-                        'modal_yt_vid' => $modal_yt_vid,
-                        'modal_yt_width' => $modal_yt_width,
-                        'modal_yt_wpp' => $modal_yt_wpp,
-                        'modal_yt_height' => $modal_yt_height,
-                        'modal_yt_allowfs' => $modal_yt_allowfs,
-                        'modal_yt_autoplay' => $modal_yt_autoplay,
-                        'modal_yt_videoloop' => $modal_yt_videoloop,
-                        'modal_yt_videocontorl' => $modal_yt_videocontorl,
-
+                        'popup_yt_vid' => $popup_yt_vid,
+                        'popup_yt_width' => $popup_yt_width,
+                        'popup_yt_wpp' => $popup_yt_wpp,
+                        'popup_yt_height' => $popup_yt_height,
+                        'popup_yt_allowfs' => $popup_yt_allowfs,
+                        'popup_yt_autoplay' => $popup_yt_autoplay,
+                        'popup_yt_videoloop' => $popup_yt_videoloop,
+                        'popup_yt_videocontorl' => $popup_yt_videocontorl,
                     );
                     update_post_meta($post_ID, $this->text_domain . '_yt_settings', serialize($yt_data));
                 }
-
-
             }
         }
     }
@@ -554,25 +574,29 @@ class WPOBModal {
             }
 
             .modal-backdrop {
-                background-color: <?php echo $this->global_setting['modal_bg_color'] ?>;
-                opacity: <?php echo ($this->global_setting['modal_bg_opacity'] / 100 ) ?> !important ;
+                background-color: <?php echo $this->global_setting['popup_bg_color'] ?>;
+                opacity: <?php echo ($this->global_setting['popup_bg_opacity'] / 100 ) ?> !important ;
 
             }
 
             .custom_size{
-                max-width:<?php echo $this->global_setting['modal_custom_width'] ?>; 
+                max-width:<?php echo $this->global_setting['popup_custom_width'] ?>; 
             }
 
         </style> 
         <?php
     }
 
+    function is_pro() {
+        return false;
+    }
+
 }
 
-function WPOBMInit() {
-    return WPOBModal::instance();
+function WPSPInit() {
+    return WPSPopup::instance();
 }
 
 //Class  instance.
-$WPOBPopover = WPOBMInit();
+$WPSPopover = WPSPInit();
 

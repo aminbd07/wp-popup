@@ -6,47 +6,47 @@ body{
 .toplevel_page_wpob-popup #adminmenu{
     background:  #22282e;
 }
-.wpobm .how-to-group{
+.wpsp .how-to-group{
     background: #fff;
     padding: 10px;
     margin-bottom: 20px;
     margin-right: 20px;
 }
-.wpobm .title{
+.wpsp .title{
     font-weight: bold; 
     font-size: 110%;
 }
 
 /**Settings form */
-.wpobm  .form-area{
+.wpsp  .form-area{
     max-width: 350px;
 }
-.post-type-wpob-popup .popup_type_settings .form-group{
+ .popup_type_settings .form-group{
     margin-bottom: 10px;
 }
-.post-type-wpob-popup .popup_type_settings label {
+ .popup_type_settings label {
     width : 25% ; 
     display: inline-block;
     font-weight: bold;
 }
-.post-type-wpob-popup .popup_type_settings label.no-fixed {
+ .popup_type_settings label.no-fixed {
     width : fit-content  ;
     display: inline-block;
 
 }
-.post-type-wpob-popup .popup_type_settings input[type="text"]  {
+ .popup_type_settings input[type="text"]  {
      width: 40%; 
 }
-.post-type-wpob-popup .popup_type_settings input[class="small"]  {
+ .popup_type_settings input[class="small"]  {
      width: 10%; 
 }
 
 
-.wpobm  .form-group {
+.wpsp  .form-group {
     margin-bottom: 1rem;
 }
  
-.wpobm  label {
+.wpsp  label {
     display: inline-block;
     margin-bottom: .5rem;
 }
@@ -64,11 +64,11 @@ body{
 }
 
 
-.wpobm  select.form-control:not([size]):not([multiple]) {
+.wpsp  select.form-control:not([size]):not([multiple]) {
     height: calc(2.25rem + 2px);
 }
 
-.wpobm  .form-control {
+.wpsp  .form-control {
     display: block;
     width: 100%;
     padding: .375rem .75rem;
@@ -81,7 +81,7 @@ body{
     border-radius: .25rem;
     transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
-.wpobm  input[type="text"] , .wpobm  select
+.wpsp  input[type="text"] , .wpsp  select
 {   max-width: 250px; 
 
 }
@@ -94,11 +94,11 @@ body{
     display: inline !important;
 
 }
-.wpobm   .text-center{
+.wpsp   .text-center{
     text-align: center;
 }
 
-.wpobm .update-status{
+.wpsp .update-status{
     padding: 10px;
     color: green;
     font-weight: bold; 
@@ -313,4 +313,16 @@ input:checked + .slider:before {
 .popup-settings-side-bar .form-group{
     margin-bottom: 20px;
     
+}
+
+.pro-need img {
+    opacity: .3;
+}
+.pro-need a{
+    position: absolute;
+    margin-top: 20%;
+    font-size: 25px;
+    opacity: 1;
+    left:  25%;
+
 }

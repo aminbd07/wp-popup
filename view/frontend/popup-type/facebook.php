@@ -5,7 +5,7 @@ $fb_meta = unserialize($fb_meta);
 ?>
 <div class="modal-body" style="text-align: center">
     <p>
-        <?php $this->checkContent($metadata['modal_fb'], 'facebook') ;  ?>
+        <?php $this->checkContent($metadata['popup_fb'], 'facebook') ;  ?>
     </p>
     <div id="fb-root"></div>
     <script>(function (d, s, id) {
@@ -19,18 +19,18 @@ $fb_meta = unserialize($fb_meta);
         }(document, 'script', 'facebook-jssdk'));</script>
     <?php
 
-    $tabs = unserialize($fb_meta['modal_fb_tab']);
+    $tabs = unserialize($fb_meta['popup_fb_tab']);
     $tabs = implode(',', $tabs);
     ?>
     <div
         class="fb-page"
-        data-href="<?php echo $fb_meta['modal_fb_url'] ?>"
+        data-href="<?php echo $fb_meta['popup_fb_url'] ?>"
         data-tabs="<?php echo $tabs; ?>"
-        data-width="<?php echo $fb_meta['modal_fb_width'] ?>"
-        data-height="<?php echo $fb_meta['modal_fb_height'] ?>"
-        data-show-facepile="<?php echo $fb_meta['modal_fb_show_face'] == 1 ? TRUE : FALSE ?>"
-        data-hide-cover="<?php echo ($fb_meta['modal_fb_hide_cover']==1) ? TRUE : FALSE ; ?>"
-        data-small-header="<?php echo ($fb_meta['modal_fb_small_header']==1) ? TRUE : FALSE; ?>"
+        data-width="<?php echo $fb_meta['popup_fb_width'] ?>"
+        data-height="<?php echo $fb_meta['popup_fb_height'] ?>"
+        data-show-facepile="<?php echo $fb_meta['popup_fb_show_face'] == 1 ? TRUE : FALSE ?>"
+        data-hide-cover="<?php echo ($fb_meta['popup_fb_hide_cover']==1) ? TRUE : FALSE ; ?>"
+        data-small-header="<?php echo ($fb_meta['popup_fb_small_header']==1) ? TRUE : FALSE; ?>"
     >
     </div>
 

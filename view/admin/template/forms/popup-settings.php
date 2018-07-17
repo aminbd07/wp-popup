@@ -24,7 +24,9 @@
         <label>
             <input type="radio" name="show_as" value="link" <?php if($metadata['show_as'] == 'link') echo 'checked'; ?>  /> Link
         </label>
-       
+        <label style="">
+            <input type="radio" name="show_as" value="image"  <?php if($metadata['show_as'] == 'image') echo 'checked'; ?> disabled/> Image(Pro Version, coming soon)
+        </label>
 
 
         <label class="title ">

@@ -5,15 +5,15 @@
     $(function () {
         $('.color-field').wpColorPicker();
 
-        jQuery('#wpobm-settings-form').on('submit', function (e) {
+        jQuery('#wpsp-settings-form').on('submit', function (e) {
             e.preventDefault();
-            var form_data = $("#wpobm-settings-form").serialize();
+            var form_data = $("#wpsp-settings-form").serialize();
             $.ajax({
-                url: WPOBM_Vars.ajaxurl,
+                url: WPSP_Vars.ajaxurl,
                 type: 'post',
                 data: {
-                    action: 'wpobm_settings_save',
-                    security: WPOBP_Vars.nonce,
+                    action: 'wpsp_settings_save',
+                    security: WPSP_Vars.nonce,
                     form_data: form_data,
                 },
                 success: function (response) {
@@ -27,15 +27,15 @@
         });
 
 
-        jQuery('#wpobm-theme').on('submit', function (e) {
+        jQuery('#wpsp-theme').on('submit', function (e) {
             e.preventDefault();
-            var form_data = $("#wpobm-theme").serialize();
+            var form_data = $("#wpsp-theme").serialize();
             $.ajax({
-                url: WPOBM_Vars.ajaxurl,
+                url: WPSP_Vars.ajaxurl,
                 type: 'post',
                 data: {
-                    action: 'wpobp_update_theme_save',
-                    security: WPOBP_Vars.nonce,
+                    action: 'wpsp_update_theme_save',
+                    security: WPSP_Vars.nonce,
                     form_data: form_data,
                 },
                 success: function (response) {
@@ -58,14 +58,14 @@
         });
 
 
-        // Theme Change 
-        jQuery(".modal_size").on("change", function () {
+        // Popup size Change 
+        jQuery(".popup_size").on("change", function () {
             var val = jQuery(this).val();
 
             if (val == 'custom_size') {
-                jQuery(".modal_custom_width_area").show(300);
+                jQuery(".popup_custom_width_area").show(300);
             } else {
-                jQuery(".modal_custom_width_area").hide();
+                jQuery(".popup_custom_width_area").hide();
             }
 
         });
@@ -75,7 +75,7 @@
         // Theme Change 
         jQuery(".theme-change").on("change", function () {
             var val = jQuery(this).val();
-            $("#wpob_modal_backend_style-css").attr({href: WPOBM_Vars.pluginurl + "/assets/css/theme/" + val + ".css"});
+            $("#wps_popup_backend_style-css").attr({href: WPSP_Vars.pluginurl + "/assets/css/theme/" + val + ".css"});
 
         });
 
@@ -94,7 +94,7 @@
         // Theme Change 
         jQuery(".select_popup_type li label img ").on("click", function () {
             var post_id = jQuery('.select_popup_type').attr('data-postid'); 
-            swicth_modal_type(this, post_id) ; 
+            swicth_popup_type(this, post_id) ; 
         });
 
         jQuery(".select_popup_type li label span ").on("hover", function () {
@@ -112,7 +112,7 @@
 
 })(jQuery);
 
-function swicth_modal_type(img, post_id){
+function swicth_popup_type(img, post_id){
      
     var val = jQuery(img).next('p').html();
             jQuery(".selected_info").html('');
@@ -132,11 +132,11 @@ function swicth_modal_type(img, post_id){
                 jQuery(".loading_content").show();
                 jQuery(".custom_popup_input").html('');
                 jQuery.ajax({
-                    url: WPOBM_Vars.ajaxurl,
+                    url: WPSP_Vars.ajaxurl,
                     type: 'post',
                     data: {
-                        action: 'wpobp_show_custom_popup_input',
-                        security: WPOBP_Vars.nonce,
+                        action: 'wpsp_show_custom_popup_input',
+                        security: WPSP_Vars.nonce,
                         post_ID: post_id,
                         popuptype: selected,
                     },
