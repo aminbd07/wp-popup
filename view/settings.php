@@ -58,8 +58,30 @@
                     <label for="switch_right2">No</label>
                 </div>
                   
+            </div>
+            
+            
+            <div class="form-group">
+                
+                  <label> Hide Popup for Post Excerpt </label>
+                   
+                  <?php
+                    $chhe_y = '';
+                    $chhe_n = ''; 
+                    if( $this->global_setting['hide_in_excerpt'] == 'yes') $chhe_y = 'checked' ; 
+                    if( $this->global_setting['hide_in_excerpt'] == 'no') $chhe_n = 'checked' ; 
+                    ?>
+                  
+                <div class="switch-field">
+                    <input type="radio" id="switch_left3" name="hide_in_excerpt" value="yes" <?php echo $chhe_y ?> />
+                    <label for="switch_left3">Yes</label>
+                    <input type="radio" id="switch_right3" name="hide_in_excerpt" value="no" <?php echo $chhe_n ?> />
+                    <label for="switch_right3">No</label>
+                </div>
                   
             </div>
+            
+            
              <br/>
              <br/>
             <div class="form-group"> 

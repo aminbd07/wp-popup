@@ -10,7 +10,7 @@
             <input type="radio" name="load_on" value="onclick"  <?php if($metadata['load_on'] == 'onclick') echo 'checked'; ?> onclick="return switch_mode()" /> On Link click 
         </label>
          <label style="">
-            <input type="radio" name="load_on" value="scrool"  <?php if($metadata['load_on'] == 'scrool') echo 'checked'; ?> disabled/> On Scrool (Pro Version, coming soon)  
+            <input type="radio" name="load_on" value="scrool"  <?php if($metadata['load_on'] == 'scrool') echo 'checked'; ?> disabled/> On Scrool (Coming soon)  
         </label>
     </div>
 
@@ -25,7 +25,7 @@
             <input type="radio" name="show_as" value="link" <?php if($metadata['show_as'] == 'link') echo 'checked'; ?>  /> Link
         </label>
         <label style="">
-            <input type="radio" name="show_as" value="image"  <?php if($metadata['show_as'] == 'image') echo 'checked'; ?> disabled/> Image(Pro Version, coming soon)
+            <input type="radio" name="show_as" value="image"  <?php if($metadata['show_as'] == 'image') echo 'checked'; ?> disabled/> Image(Coming soon)
         </label>
 
 

@@ -2,8 +2,8 @@
 /*
  * Plugin Name: Smart Popup
  * Version: 1.0.0
- * Plugin URI:
- * Description: Add popup anywhere in yoursite with short code.  
+ * Plugin URI:  
+ * Description: A Complete solution for the popup. You can add a stylish and easily add a popup for page auto load or link on page and post.   
  * Author: Nurul Amin 
  * Author URI: http://nurul.ninja
  * Requires at least: 4.0
@@ -20,6 +20,8 @@ class WPSPopup {
     public $text_domain = 'wpsp';
     public $db_version = '1.0.0';
     public $custom_post_name = 'wps-popup';
+    public $post_name_show = 'Smart Popup';
+    public $short_code_name = 'wps-popup';
     public $setting_options_name = 'wpsp_global_settings';
     public $global_setting = null;
     public $load_popups = [];
@@ -65,7 +67,7 @@ class WPSPopup {
         add_action('admin_menu', array($this, 'admin_menu'));
 
         add_action('init', array($this, 'register_post_type'));
-        add_shortcode('wps-popup', array($this, 'render_short_code'));
+        add_shortcode($this->short_code_name, array($this, 'render_short_code'));
         add_filter("manage_{$this->custom_post_name}_posts_columns", array($this, 'manage_custom_columns'));
         add_action("manage_{$this->custom_post_name}_posts_custom_column", array($this, 'manage_custom_columns_value'));
         add_action('wp_ajax_wpsp_settings_save', array($this, 'settings_save'));
@@ -79,6 +81,7 @@ class WPSPopup {
         // check shortcode exist in conetn 
 
         add_action('the_content', array($this, 'add_data_in_post_content'));
+        
     }
 
     public function define_constants() {
@@ -86,7 +89,7 @@ class WPSPopup {
         $this->define('WPSP_DB_VERSION', $this->db_version);
         $this->define('WPSP_PATH', plugin_dir_path(__FILE__));
         $this->define('WPSP_URL', plugins_url('', __FILE__));
-        $this->define('PRO_URL', 'http://wpobserver.com/wp-popup');
+        $this->define('PRO_URL', 'http://wpobserver.com/smart-popup');
     }
 
     public function define($name, $value) {
@@ -123,7 +126,7 @@ class WPSPopup {
     }
 
     function register_post_type() {
-        $name = "WP Popup";
+        $name = $this->post_name_show;
         $labels = array(
             'name' => __($name, 'post type general name', $this->text_domain),
             'singular_name' => __($name, 'post type singular name', $this->text_domain),
@@ -150,6 +153,7 @@ class WPSPopup {
             'hierarchical' => false,
             'rewrite' => false,
             'query_var' => false,
+            'menu_icon' => 'dashicons-testimonial',
             'show_in_nav_menus' => false,
         );
         register_post_type($this->custom_post_name, $post_type_agr);
@@ -191,7 +195,7 @@ class WPSPopup {
         //add_menu_page( 'WP Popup', 'WP Popup', $capability, $this->custom_post_name, array( $this, 'manage_menu_pages' ) , 'dashicons-feedback', 6 );
 
         add_submenu_page('edit.php?post_type=' . $this->custom_post_name, __('Theme', $this->text_domain), __('Theme', $this->text_domain), $capability, __('theme', $this->text_domain), array($this, 'manage_menu_pages'));
-        add_submenu_page('edit.php?post_type=' . $this->custom_post_name, __('How To USE', $this->text_domain), __('How to Use', $this->text_domain), $capability, __('how_to_use', $this->text_domain), array($this, 'manage_menu_pages'));
+        //add_submenu_page('edit.php?post_type=' . $this->custom_post_name, __('How To USE', $this->text_domain), __('How to Use', $this->text_domain), $capability, __('how_to_use', $this->text_domain), array($this, 'manage_menu_pages'));
         add_submenu_page('edit.php?post_type=' . $this->custom_post_name, __('WPSP Settings', $this->text_domain), __('Setting', $this->text_domain), $capability, __('global_settings', $this->text_domain), array($this, 'manage_menu_pages'));
     }
 
@@ -238,7 +242,7 @@ class WPSPopup {
 
         switch ($column) {
             case 'wpsp_sc' :
-                echo "[wps-popup id='{$post->ID}']";
+                echo "[" . $this->short_code_name . " id='{$post->ID}']";
                 break;
             case 'wpsp_type' :
                 echo $metadata['popup_type'];
@@ -285,6 +289,9 @@ class WPSPopup {
 
     function render_short_code($atts, $content = null) {
 
+        if ( ! is_single() AND $this->global_setting['hide_in_excerpt'] == 'yes' ){
+            return;
+        }
         $atts = array_change_key_case((array) $atts, CASE_LOWER);
 
         $a = shortcode_atts(array(
@@ -321,7 +328,9 @@ class WPSPopup {
     }
 
     function add_data_in_post_content($content) {
-
+        if ( ! is_single() AND $this->global_setting['hide_in_excerpt'] == 'yes' ){
+            return $content;
+        } 
         $pattern = get_shortcode_regex(array('wps-popup'));
         preg_match_all('/' . $pattern . '/s', $content, $matches);
 
@@ -420,6 +429,8 @@ class WPSPopup {
 
         return $content;
     }
+
+            
 
     function show_custom_popup_input() {
 
